@@ -11,10 +11,10 @@ describe CoffeeCart do
       # GIVEN
       drink = 'T'
       sugar = 1
+      money = 0.4
 
       # WHEN
-      result = CoffeeCart.new.receive_order(drink, sugar)
-      puts result
+      result = CoffeeCart.new.get_order(drink, sugar, money)
 
       # THEN
       expect(result).to eq('T:1:0')
@@ -24,10 +24,10 @@ describe CoffeeCart do
       # GIVEN
       drink = 'H'
       sugar = 0
+      money = 0.5
 
       # WHEN
-      result = CoffeeCart.new.receive_order(drink, sugar)
-      puts result
+      result = CoffeeCart.new.get_order(drink, sugar, money)
 
       # THEN
       expect(result).to eq('H::')
@@ -37,22 +37,49 @@ describe CoffeeCart do
       # GIVEN
       drink = 'C'
       sugar = 2
+      money = 0.6
 
       # WHEN
-      result = CoffeeCart.new.receive_order(drink, sugar)
-      puts result
+      result = CoffeeCart.new.get_order(drink, sugar, money)
 
       # THEN
       expect(result).to eq('C:2:0')
+    end
+
+    it 'should only make drink if the correct amount of money is given' do
+      # GIVEN
+      drink = 'T'
+      sugar = 1
+      money = 0.4
+
+      # WHEN
+      result = CoffeeCart.new.get_order(drink, sugar, money)
+
+      # THEN
+      expect(result).to eq('T:1:0')
+    end
+
+    it 'should return message with how much money missing for the order' do
+      # GIVEN
+      drink = 'T'
+      sugar = 1
+      money = 0.3
+
+      # WHEN
+      result = CoffeeCart.new.get_order(drink, sugar, money)
+
+      # THEN
+      expect(result).to eq('M:Not enough')
     end
   end
 
   describe '#deliver_message' do
     it 'should receive a message with a drink order' do
       # GIVEN
+      message = 'Hello'
 
       # WHEN
-      result = CoffeeCart.new.deliver_message('Hello')
+      result = CoffeeCart.new.send_message(message)
 
       # THEN
       expect(result).to eq('M:' + 'Hello')
