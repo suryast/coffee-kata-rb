@@ -2,7 +2,7 @@
 # spec/test_spec.rb
 
 require 'sorbet-runtime'
-
+require 'rspec/sorbet'
 require 'coffee_cart'
 
 describe CoffeeCart do
