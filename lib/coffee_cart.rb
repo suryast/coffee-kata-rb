@@ -16,11 +16,11 @@ class CoffeeCart
 
   sig { params(drink: String, sugar: Integer, money: Float, extra_hot: T::Boolean).returns(String) }
 
-  def get_order(drink, sugar=0, money, extra_hot = false)
+  def get_order(drink, sugar, money, extra_hot = false)
     stick = sugar.positive? ? 0 : ''
     sugar = sugar.zero? ? '' : sugar
 
-    extra_hot ? drink = drink + 'h' : drink
+    extra_hot ? drink = (drink + 'h') : drink
 
     missing_money = send_missing_amount(drink, money)
 
@@ -45,22 +45,22 @@ class CoffeeCart
   def send_missing_amount(drink, money)
     if !(drink == 'T' && money >= PriceEnum::TEA ||
         drink == 'C' && money >= PriceEnum::COFFEE ||
-        drink == 'H' && money >= PriceEnum::CHOCOLATE) ||
-        drink = 'O' && money >= PriceEnum::ORANGE_JUICE
+        drink == 'H' && money >= PriceEnum::CHOCOLATE ||
+        drink == 'O' && money >= PriceEnum::ORANGE_JUICE)
       missing_amount(drink, money)
     else
       0.0
     end
   end
 
-  sig { params(drink: String, money: Float).returns(T.nilable(T.any(Integer, Float)))}
+  sig { params(drink: String, money: Float).returns(T.nilable(T.any(Integer, Float))) }
 
   def missing_amount(drink, money)
-    if drink == 'T'
+    if drink == 'T' || drink == 'Th'
       (PriceEnum::TEA - money).round(1)
-    elsif drink == 'C'
+    elsif drink == 'C' || drink == 'Ch'
       (PriceEnum::COFFEE - money).round(1)
-    elsif drink == 'H'
+    elsif drink == 'H' || drink = 'Hh'
       (PriceEnum::CHOCOLATE - money).round(1)
     else
       (PriceEnum::ORANGE_JUICE - money).round(1)

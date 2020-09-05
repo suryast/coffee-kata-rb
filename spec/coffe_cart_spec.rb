@@ -79,7 +79,7 @@ describe CoffeeCart do
       money = 0.6
 
       # WHEN
-      result = CoffeeCart.new.get_order(drink,sugar,money)
+      result = CoffeeCart.new.get_order(drink, sugar, money)
 
       # THEN
       expect(result).to eq('O::')
@@ -93,10 +93,10 @@ describe CoffeeCart do
       extra_hot = true
 
       # WHEN
-      result = CoffeeCart.new.get_order(drink,sugar,money, extra_hot)
+      result = CoffeeCart.new.get_order(drink, sugar, money, extra_hot)
 
       # THEN
-      expect(result).to eq('O::')
+      expect(result).to eq('Ch::')
     end
   end
 
