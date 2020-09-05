@@ -36,10 +36,10 @@ class CoffeeCart
   private
 
   def correct_change?(drink, money)
-    send_missing_amount(drink, money).zero? ? true : false
+    T.must(send_missing_amount(drink, money)).zero? ? true : false
   end
 
-  sig { params(drink: String, money: Float).returns(Float) }
+  sig { params(drink: String, money: Float).returns(T.nilable(T.any(Integer, Float))) }
 
   private
 
@@ -47,7 +47,7 @@ class CoffeeCart
     if drink == 'T' && money >= PriceEnum::TEA ||
         drink == 'C' && money >= PriceEnum::COFFEE ||
         drink == 'H' && money >= PriceEnum::CHOCOLATE
-      0.to_f
+      0.0
     elsif drink == 'T'
       (PriceEnum::TEA - money).round(1)
     elsif drink == 'C'
