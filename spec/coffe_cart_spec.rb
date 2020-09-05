@@ -71,6 +71,33 @@ describe CoffeeCart do
       # THEN
       expect(result).to eq('M:0.1')
     end
+
+    it 'should make orange juice for 0.6 euro' do
+      # GIVEN
+      drink = 'O'
+      sugar = 0
+      money = 0.6
+
+      # WHEN
+      result = CoffeeCart.new.get_order(drink,sugar,money)
+
+      # THEN
+      expect(result).to eq('O::')
+    end
+
+    it 'should be extra hot drink when required' do
+      # GIVEN
+      drink = 'C'
+      sugar = 0
+      money = 0.6
+      extra_hot = true
+
+      # WHEN
+      result = CoffeeCart.new.get_order(drink,sugar,money, extra_hot)
+
+      # THEN
+      expect(result).to eq('O::')
+    end
   end
 
   describe '#deliver_message' do
