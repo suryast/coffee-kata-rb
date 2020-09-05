@@ -33,22 +33,26 @@ class CoffeeCart
 
   sig { params(drink: String, money: Float).returns(T::Boolean) }
 
-  private
-
   def correct_change?(drink, money)
     T.must(send_missing_amount(drink, money)).zero? ? true : false
   end
 
   sig { params(drink: String, money: Float).returns(T.nilable(T.any(Integer, Float))) }
 
-  private
-
   def send_missing_amount(drink, money)
-    if drink == 'T' && money >= PriceEnum::TEA ||
+    if !(drink == 'T' && money >= PriceEnum::TEA ||
         drink == 'C' && money >= PriceEnum::COFFEE ||
-        drink == 'H' && money >= PriceEnum::CHOCOLATE
+        drink == 'H' && money >= PriceEnum::CHOCOLATE)
+      missing_amount(drink, money)
+    else
       0.0
-    elsif drink == 'T'
+    end
+  end
+
+  sig { params(drink: String, money: Float).returns(T.nilable(T.any(Integer, Float)))}
+
+  def missing_amount(drink, money)
+    if drink == 'T'
       (PriceEnum::TEA - money).round(1)
     elsif drink == 'C'
       (PriceEnum::COFFEE - money).round(1)
@@ -56,4 +60,8 @@ class CoffeeCart
       (PriceEnum::CHOCOLATE - money).round(1)
     end
   end
+
+  private :correct_change?
+  private :send_missing_amount
+  private :missing_amount
 end
