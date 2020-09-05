@@ -69,7 +69,7 @@ describe CoffeeCart do
       result = CoffeeCart.new.get_order(drink, sugar, money)
 
       # THEN
-      expect(result).to eq('M:Not enough')
+      expect(result).to eq('M:0.1')
     end
   end
 
